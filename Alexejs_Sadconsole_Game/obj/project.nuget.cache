@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "gqJyn5e/mhCORSSrA6Fkcx86yVDDkiJnwGkR7U/ubFtpd2YuLSaRi2z7qILDqubMMoRCPIUbfZ62UB5EWzAgLw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\datahaxx\\Documents\\Avancerad_Programmering_Alexej\\Sadconsole_Uppgift\\Alexejs_Sadconsole_Game\\MyGame.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\datahaxx\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\datahaxx\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\datahaxx\\.nuget\\packages\\sadconsole\\10.0.0\\sadconsole.10.0.0.nupkg.sha512",
+    "C:\\Users\\datahaxx\\.nuget\\packages\\sadconsole.host.monogame\\10.0.0\\sadconsole.host.monogame.10.0.0.nupkg.sha512",
+    "C:\\Users\\datahaxx\\.nuget\\packages\\thesadrogue.primitives\\1.6.0-rc3\\thesadrogue.primitives.1.6.0-rc3.nupkg.sha512"
+  ],
+  "logs": []
+}
