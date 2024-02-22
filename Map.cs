@@ -21,10 +21,11 @@ internal class Map
 
         UserControlledObject = new GameObject(new ColoredGlyph(Color.White, Color.Black, 2), _mapSurface.Surface.Area.Center, _mapSurface);
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
-            CreateTreasure();
-            CreateMonster();
+            CreateWalls();
+            CreatePellet();
+            CreateGhost();
         }
     }
 
@@ -48,9 +49,26 @@ internal class Map
     }
 
 
+    private void CreateWalls()
+    {
+        // Try 1000 times to get an empty map position
+        for (int i = 0; i < 1000; i++)
+        {
+            // Get a random position
+            Point Wallsposition = new Point(i, i);
 
+            // Check if any object is already positioned there, repeat the loop if found
+            bool foundObject = _mapObjects.Any(obj => obj.Position == Wallsposition);
+            if (foundObject) continue;
 
-    private void CreateTreasure()
+            // If the code reaches here, we've got a good position, create the game object.
+            Walls walls = new Walls(Wallsposition, _mapSurface);
+            _mapObjects.Add(walls);
+            break;
+        }
+    }
+
+    private void CreatePellet()
     {
         // Try 1000 times to get an empty map position
         for (int i = 0; i < 1000; i++)
@@ -64,28 +82,28 @@ internal class Map
             if (foundObject) continue;
 
             // If the code reaches here, we've got a good position, create the game object.
-            Treasure treasure = new Treasure(randomPosition, _mapSurface);
-            _mapObjects.Add(treasure);
+            Pellet pellet = new Pellet(randomPosition, _mapSurface);
+            _mapObjects.Add(pellet);
             break;
         }
     }
 
-    private void CreateMonster()
+    private void CreateGhost()
     {
         // Try 1000 times to get an empty map position
         for (int i = 0; i < 1000; i++)
         {
             // Get a random position
             Point randomPosition = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
-                                                Game.Instance.Random.Next(0, _mapSurface.Surface.Height));
+                                             Game.Instance.Random.Next(0, _mapSurface.Surface.Height));
 
             // Check if any object is already positioned there, repeat the loop if found
             bool foundObject = _mapObjects.Any(obj => obj.Position == randomPosition);
             if (foundObject) continue;
 
             // If the code reaches here, we've got a good position, create the game object.
-            Monster monster = new Monster(randomPosition, _mapSurface);
-            _mapObjects.Add(monster);
+            Ghost ghost = new Ghost(randomPosition, _mapSurface);
+            _mapObjects.Add(ghost);
             break;
         }
     }

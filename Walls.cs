@@ -1,12 +1,12 @@
 ﻿namespace SadConsoleGame;
 
-internal class Ghost : GameObject
+internal class Walls : GameObject
 {
-    public Ghost(Point position, IScreenSurface hostingSurface) : base(new ColoredGlyph(Color.Red, Color.Black, 'M'), position, hostingSurface)
+    public Walls(Point position, IScreenSurface hostingSurface) : base(new ColoredGlyph(Color.Blue, Color.Blue, '_'), position, hostingSurface)
     {
         for (int i = 0; i < 10; i++)
         {
-        
+
         }
     }
     public override bool Touched(GameObject source, Map map)

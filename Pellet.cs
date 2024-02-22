@@ -1,8 +1,8 @@
 ﻿namespace SadConsoleGame;
 
-internal class Treasure : GameObject
+internal class Pellet : GameObject
 {
-    public Treasure(Point position, IScreenSurface hostingSurface)
+    public Pellet(Point position, IScreenSurface hostingSurface)
     : base(new ColoredGlyph(Color.Yellow, Color.Black, 'v'), position, hostingSurface)
     {
 
