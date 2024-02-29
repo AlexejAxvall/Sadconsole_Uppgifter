@@ -4,7 +4,7 @@ using SadConsoleGame;
 Settings.WindowTitle = "My SadConsole Game";
 
 Builder configuration = new Builder()
-    .SetScreenSize(120, 38)
+    .SetScreenSize(20, 23)
     .SetStartingScreen<RootScreen>()
     .IsStartingScreenFocused(true)
     ;

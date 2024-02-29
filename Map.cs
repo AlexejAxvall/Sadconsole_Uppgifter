@@ -21,50 +21,79 @@ internal class Map
 
         UserControlledObject = new GameObject(new ColoredGlyph(Color.White, Color.Black, 2), _mapSurface.Surface.Area.Center, _mapSurface);
 
+        CreateWalls();
+
         for (int i = 0; i < 10; i++)
         {
-            CreateWalls();
             CreatePellet();
             CreateGhost();
         }
     }
 
+
     private void FillBackground()
     {
-        // Iterate over each cell in the surface
-        for (int y = 0; y < _mapSurface.Surface.Height; y++)
+        for (int y = 0; y < _mapSurface.Surface.Height; y++) 
         {
-            for (int x = 0; x < _mapSurface.Surface.Width; x++)
+            for (int x = 0; x < _mapSurface.Surface.Width; x++) 
             {
-                // Get the cell at the current position
                 var cell = _mapSurface.Surface[x, y];
 
-                // Set the cell's background color to black
                 cell.Background = SadRogue.Primitives.Color.Black;
             }
         }
-
-        // Mark the surface as dirty to redraw it
         _mapSurface.IsDirty = true;
     }
 
+    List<List<int>> mapList = new List<List<int>>
+    {
+        new List<int> { 2, 2, 2, 2, 2 },
+        new List<int> { 1, 16, 1 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 },
+        new List<int> { 20 }
+    };
 
     private void CreateWalls()
     {
-        // Try 1000 times to get an empty map position
-        for (int i = 0; i < 1000; i++)
+        int count = 0;
+        int space = 0;
+        for (int y = 0; y < (mapList.Count); y++)
         {
-            // Get a random position
-            Point Wallsposition = new Point(i, i);
+            for (int x = 0; x < (mapList[y].Count); x++)
+            {
+                int theX = mapList[y][x];
 
-            // Check if any object is already positioned there, repeat the loop if found
-            bool foundObject = _mapObjects.Any(obj => obj.Position == Wallsposition);
-            if (foundObject) continue;
+                for (int x2 = space; x2 < theX; x2++)
+                {
+                    Point Wallsposition = new Point(x2, y);
 
-            // If the code reaches here, we've got a good position, create the game object.
-            Walls walls = new Walls(Wallsposition, _mapSurface);
-            _mapObjects.Add(walls);
-            break;
+                    Walls walls = new Walls(Wallsposition, _mapSurface);
+                    _mapObjects.Add(walls);
+
+                    count = x2 + 1;
+                    space = 0;
+                }
+                
+                space = 1;
+            }
+            
+            space = 0;
         }
     }
 
