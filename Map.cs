@@ -1,4 +1,5 @@
 ﻿using SadConsole;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SadConsoleGame;
@@ -47,47 +48,33 @@ internal class Map
 
     List<List<int>> mapList = new List<List<int>>
     {
-        new List<int> { 2, 2, 2, 2, 2 },
-        new List<int> { 1, 16, 1 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 },
-        new List<int> { 20 }
+        new List<int> { 1, 2, 3, 4 },
+        new List<int> { 1, 2, 3, 4 },
     };
 
     private void CreateWalls()
     {
-        int count = 0;
         int space = 0;
+        int currentPlaceX = 0;
+
         for (int y = 0; y < (mapList.Count); y++)
         {
+            currentPlaceX = 0;
             for (int x = 0; x < (mapList[y].Count); x++)
             {
                 int theX = mapList[y][x];
-
-                for (int x2 = space; x2 < theX; x2++)
+                Debug.WriteLine("theX = " + theX);
+                for (int i = 0; i <= theX; i++)
                 {
-                    Point Wallsposition = new Point(x2, y);
+                    Point Wallsposition = new Point(currentPlaceX + space, y);
 
                     Walls walls = new Walls(Wallsposition, _mapSurface);
                     _mapObjects.Add(walls);
 
-                    count = x2 + 1;
                     space = 0;
+
+                    Debug.WriteLine("Current X = " + currentPlaceX);
+                    currentPlaceX++;
                 }
                 
                 space = 1;
