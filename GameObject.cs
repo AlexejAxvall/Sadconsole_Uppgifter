@@ -15,17 +15,27 @@ internal class GameObject
 
     public bool Move(Point newPosition, Map map)
     {
-        // Check new position is valid
-        if (!map.SurfaceObject.IsValidCell(newPosition.X, newPosition.Y)) return false;
+        int minX = 0, maxX = 22, minY = 0, maxY = 22;
 
-        // Check if other object is there
-        if (map.TryGetMapObject(newPosition, out GameObject? foundObject))
+        if (newPosition.X < minX) newPosition = new Point(maxX, newPosition.Y);
+        else if (newPosition.X > maxX) newPosition = new Point(minX, newPosition.Y);
+        if (newPosition.Y < minY) newPosition = new Point(newPosition.X, maxY);
+        else if (newPosition.Y > maxY) newPosition = new Point(newPosition.X, minY);
+
+
+        // Check if new position is valid
+        if (!map.SurfaceObject.IsValidCell(newPosition.X, newPosition.Y))
         {
-            // We touched the other object, but they won't allow us to move into the space
-            if (!foundObject.Touched(this, map))
-                return false;
+            return false;
         }
 
+
+        // Check if other object is there and if it we can move through it
+        if (map.TryGetMapObject(newPosition, out GameObject? foundObject) && !foundObject.Touched(this, map))
+        { 
+        return false;
+        }
+        
         // Restore the old cell
         _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
 

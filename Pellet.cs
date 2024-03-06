@@ -3,7 +3,7 @@
 internal class Pellet : GameObject
 {
     public Pellet(Point position, IScreenSurface hostingSurface)
-    : base(new ColoredGlyph(Color.Yellow, Color.Black, 'v'), position, hostingSurface)
+    : base(new ColoredGlyph(Color.Yellow, Color.Black, '.'), position, hostingSurface)
     {
 
     }

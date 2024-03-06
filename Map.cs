@@ -24,11 +24,8 @@ internal class Map
 
         CreateWalls();
 
-        for (int i = 0; i < 10; i++)
-        {
-            CreatePellet();
-            CreateGhost();
-        }
+        CreatePellet();
+        CreateGhost();
     }
 
 
@@ -48,79 +45,80 @@ internal class Map
 
     List<List<int>> mapList = new List<List<int>>
     {
-        new List<int> { 1, 2, 3, 4 },
-        new List<int> { 1, 2, 3, 4 },
+        new List<int> {0, 23},
+        new List<int> {0, 1, 4, 5, 18, 19, 22, 23},
+        new List<int> {0, 1, 2, 3, 4, 5, 6, 11, 12, 17, 18, 19, 20, 21, 22, 23},
+        new List<int> {0, 1, 8, 9, 14, 15, 22, 23},
+        new List<int> {0, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 23},
+        new List<int> {0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23},
+        new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23},
+        new List<int> {0, 1, 4, 5, 6, 7, 16, 7, 16, 17, 18, 19, 22, 23},
+        new List<int> {0, 5, 6, 7, 8, 15, 16, 17, 18, 23},
+        new List<int> {0, 1, 6, 7, 16, 17, 22, 23},
+        new List<int> {0, 1, 2, 7, 8, 11, 12, 15, 16, 21, 22, 23},
+        new List<int> {8, 9, 14, 15},
+        new List<int> {0, 1, 2, 7, 8, 11, 12, 15, 16, 21, 22, 23},
+        new List<int> {0, 1, 6, 7, 16, 17, 22, 23},
+        new List<int> {0, 5, 6, 7, 8, 15, 16, 17, 18, 23},
+        new List<int> {0, 1, 4, 5, 6, 7, 16, 7, 16, 17, 18, 19, 22, 23},
+        new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23},
+        new List<int> {0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23},
+        new List<int> {0, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 23},
+        new List<int> {0, 1, 8, 9, 14, 15, 22, 23},
+        new List<int> {0, 1, 2, 3, 4, 5, 6, 11, 12, 17, 18, 19, 20, 21, 22, 23},
+        new List<int> {0, 1, 4, 5, 18, 19, 22, 23},
+        new List<int> {0, 23},
     };
 
     private void CreateWalls()
     {
-        int space = 0;
-        int currentPlaceX = 0;
-
-        for (int y = 0; y < (mapList.Count); y++)
+        for (int y = 0; y < mapList.Count; y++)
         {
-            currentPlaceX = 0;
-            for (int x = 0; x < (mapList[y].Count); x++)
+            for (int x = 0; x < mapList[y].Count; x += 2)
             {
-                int theX = mapList[y][x];
-                Debug.WriteLine("theX = " + theX);
-                for (int i = 0; i <= theX; i++)
+                int low_Threshold = mapList[y][x];
+                int high_Threshold = mapList[y][x + 1];
+
+                for (int x_to_place_on = low_Threshold; x_to_place_on < high_Threshold; x_to_place_on++)
                 {
-                    Point Wallsposition = new Point(currentPlaceX + space, y);
+                    Point Wallsposition = new Point(x_to_place_on, y);
 
                     Walls walls = new Walls(Wallsposition, _mapSurface);
                     _mapObjects.Add(walls);
-
-                    space = 0;
-
-                    Debug.WriteLine("Current X = " + currentPlaceX);
-                    currentPlaceX++;
                 }
-                
-                space = 1;
             }
-            
-            space = 0;
         }
     }
 
     private void CreatePellet()
     {
-        // Try 1000 times to get an empty map position
-        for (int i = 0; i < 1000; i++)
+        for (int y = 0; y < Game.Instance.ScreenCellsY; y++)
         {
-            // Get a random position
-            Point randomPosition = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
-                                             Game.Instance.Random.Next(0, _mapSurface.Surface.Height));
-
-            // Check if any object is already positioned there, repeat the loop if found
-            bool foundObject = _mapObjects.Any(obj => obj.Position == randomPosition);
-            if (foundObject) continue;
-
-            // If the code reaches here, we've got a good position, create the game object.
-            Pellet pellet = new Pellet(randomPosition, _mapSurface);
-            _mapObjects.Add(pellet);
-            break;
+            for (int x = 0; x < Game.Instance.ScreenCellsX; x++)
+            {
+                Point pelletPosition = new Point(x, y);
+                if (!TryGetMapObject(pelletPosition, out _))
+                {
+                    Pellet pellet = new Pellet(pelletPosition, _mapSurface);
+                    _mapObjects.Add(pellet);
+                }
+            }
         }
     }
 
     private void CreateGhost()
     {
-        // Try 1000 times to get an empty map position
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 3; i++)
         {
-            // Get a random position
-            Point randomPosition = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
-                                             Game.Instance.Random.Next(0, _mapSurface.Surface.Height));
+            Point ghostPosition = new Point(10 + i, 13);
 
             // Check if any object is already positioned there, repeat the loop if found
-            bool foundObject = _mapObjects.Any(obj => obj.Position == randomPosition);
+            bool foundObject = _mapObjects.Any(obj => obj.Position == ghostPosition);
             if (foundObject) continue;
 
             // If the code reaches here, we've got a good position, create the game object.
-            Ghost ghost = new Ghost(randomPosition, _mapSurface);
+            Ghost ghost = new Ghost(ghostPosition, _mapSurface);
             _mapObjects.Add(ghost);
-            break;
         }
     }
 
