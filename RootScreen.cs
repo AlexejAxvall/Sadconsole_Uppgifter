@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using SadConsole.Input;
+using SadConsole.Components;
 
 namespace SadConsoleGame;
 
@@ -137,7 +138,12 @@ internal class RootScreen : ScreenObject
                 Debug.WriteLine(playerPosition);
             }
 
-            
+            //if (handled)
+            //{
+            //    _map.Update();
+            //    string points = "Points: " + (())
+            //}
+
         }
 
         //newMove = true;

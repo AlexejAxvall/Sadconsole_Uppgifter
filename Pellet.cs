@@ -14,6 +14,7 @@ internal class Pellet : GameObject
         if (source == map.UserControlledObject)
         {
             map.RemoveMapObject(this);
+
             return true;
         }
 

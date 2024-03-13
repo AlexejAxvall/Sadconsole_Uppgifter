@@ -9,6 +9,7 @@ internal class Map
     private List<GameObject> _mapObjects;
     private ScreenSurface _mapSurface;
 
+    public IReadOnlyList<GameObject> GameObjects => _mapObjects.AsReadOnly();
     public ScreenSurface SurfaceObject => _mapSurface;
     public GameObject UserControlledObject { get; set; }
 
@@ -23,7 +24,6 @@ internal class Map
         UserControlledObject = new GameObject(new ColoredGlyph(Color.White, Color.Black, 2), _mapSurface.Surface.Area.Center, _mapSurface);
 
         CreateWalls();
-
         CreatePellet();
         CreateGhost();
     }
@@ -45,6 +45,7 @@ internal class Map
 
     List<List<int>> mapList = new List<List<int>>
     {
+        new List<int> {},
         new List<int> {0, 23},
         new List<int> {0, 1, 4, 5, 18, 19, 22, 23},
         new List<int> {0, 1, 2, 3, 4, 5, 6, 11, 12, 17, 18, 19, 20, 21, 22, 23},
@@ -72,7 +73,7 @@ internal class Map
 
     private void CreateWalls()
     {
-        for (int y = 0; y < mapList.Count; y++)
+        for (int y = 1; y < mapList.Count; y++)
         {
             for (int x = 0; x < mapList[y].Count; x += 2)
             {
@@ -92,7 +93,7 @@ internal class Map
 
     private void CreatePellet()
     {
-        for (int y = 0; y < Game.Instance.ScreenCellsY; y++)
+        for (int y = 1; y < Game.Instance.ScreenCellsY; y++)
         {
             for (int x = 0; x < Game.Instance.ScreenCellsX; x++)
             {

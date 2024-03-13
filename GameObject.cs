@@ -1,5 +1,10 @@
 ﻿namespace SadConsoleGame;
 
+//public virtual bool Update(Map map)
+//{
+//    return false;
+//}
+
 internal class GameObject
 {
     private ColoredGlyph _mapAppearance = new ColoredGlyph();
@@ -32,10 +37,10 @@ internal class GameObject
 
         // Check if other object is there and if it we can move through it
         if (map.TryGetMapObject(newPosition, out GameObject? foundObject) && !foundObject.Touched(this, map))
-        { 
-        return false;
+        {
+            return false;
         }
-        
+
         // Restore the old cell
         _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
 
@@ -67,4 +72,9 @@ internal class GameObject
 
     public void RestoreMap(Map map) =>
     _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
+
+    public virtual bool Update(TimeSpan delta, Map map);
+    {
+        return false;
+    }
 }
