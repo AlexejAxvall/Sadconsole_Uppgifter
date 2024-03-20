@@ -20,7 +20,7 @@ internal class GameObject
 
     public bool Move(Point newPosition, Map map)
     {
-        int minX = 0, maxX = 22, minY = 0, maxY = 22;
+        int minX = 0, maxX = 23, minY = 0, maxY = 23;
 
         if (newPosition.X < minX) newPosition = new Point(maxX, newPosition.Y);
         else if (newPosition.X > maxX) newPosition = new Point(minX, newPosition.Y);
@@ -33,7 +33,6 @@ internal class GameObject
         {
             return false;
         }
-
 
         // Check if other object is there and if it we can move through it
         if (map.TryGetMapObject(newPosition, out GameObject? foundObject) && !foundObject.Touched(this, map))

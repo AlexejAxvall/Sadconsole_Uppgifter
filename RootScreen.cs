@@ -27,6 +27,7 @@ internal class RootScreen : ScreenObject
     public override bool ProcessKeyboard(Keyboard keyboard)
     {
         bool handled = false;
+        Player player = (Player)_map.UserControlledObject;
         
         if (keyboard.IsKeyPressed(Keys.Up) || going_Up || next_direction_up)
         {
@@ -37,11 +38,10 @@ internal class RootScreen : ScreenObject
                 next_direction_left = false;
                 next_direction_right = false;
             }
-
-            _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Up, _map);
+            player.dir = new Point(0, -1);
             handled = true;
 
-            bool move_up_possible = _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Up, _map);
+            bool move_up_possible = player.Move(_map.UserControlledObject.Position + Direction.Up, _map);
 
             if (move_up_possible)
             {
@@ -66,10 +66,10 @@ internal class RootScreen : ScreenObject
                 next_direction_right = false;
             }
 
-            _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Down, _map);
+            player.dir = new Point(0, 1);
             handled = true;
 
-            bool move_down_possible = _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Down, _map);
+            bool move_down_possible = player.Move(_map.UserControlledObject.Position + Direction.Down, _map);
 
             if (move_down_possible)
             {
@@ -78,9 +78,6 @@ internal class RootScreen : ScreenObject
                 going_Down = true;
                 going_Left = false;
                 going_Right = false;
-
-                Point playerPosition = _map.UserControlledObject.Position;
-                Debug.WriteLine(playerPosition);
             }
         }
 
@@ -93,10 +90,10 @@ internal class RootScreen : ScreenObject
                 next_direction_left = true;
                 next_direction_right = false;
             }
-            _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Left, _map);
+            player.dir = new Point(-1, 0);
             handled = true;
 
-            bool move_left_possible = _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Left, _map);
+            bool move_left_possible = player.Move(_map.UserControlledObject.Position + Direction.Left, _map);
 
             if (move_left_possible)
             {
@@ -105,9 +102,6 @@ internal class RootScreen : ScreenObject
                 going_Down = false;
                 going_Left = true;
                 going_Right = false;
-
-                Point playerPosition = _map.UserControlledObject.Position;
-                Debug.WriteLine(playerPosition);
             }
 
             
@@ -121,10 +115,10 @@ internal class RootScreen : ScreenObject
                 next_direction_left = false;
                 next_direction_right = true;
             }
-            _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Right, _map);
+            player.dir = new Point(1, 0);
             handled = true;
 
-            bool move_right_possible = _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Right, _map);
+            bool move_right_possible = player.Move(_map.UserControlledObject.Position + Direction.Right, _map);
 
             if (move_right_possible)
             {
@@ -133,20 +127,16 @@ internal class RootScreen : ScreenObject
                 going_Down = false;
                 going_Left = false;
                 going_Right = true;
-
-                Point playerPosition = _map.UserControlledObject.Position;
-                Debug.WriteLine(playerPosition);
             }
-
-            if (handled)
-            {
-                TimeSpan delta = TimeSpan.FromSeconds(2);
-                _map.Update(delta);
-            }
-
         }
 
         //newMove = true;
         return handled;
     }
+
+    /*public override void Update(TimeSpan delta)
+    {
+        _map.Update(delta);
+    }
+    */
 }
