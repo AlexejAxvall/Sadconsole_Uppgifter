@@ -138,11 +138,11 @@ internal class RootScreen : ScreenObject
                 Debug.WriteLine(playerPosition);
             }
 
-            //if (handled)
-            //{
-            //    _map.Update();
-            //    string points = "Points: " + (())
-            //}
+            if (handled)
+            {
+                TimeSpan delta = TimeSpan.FromSeconds(2);
+                _map.Update(delta);
+            }
 
         }
 

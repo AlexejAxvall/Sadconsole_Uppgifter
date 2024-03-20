@@ -14,14 +14,14 @@ internal class Ghost : GameObject
         return base.Touched(source, map);
     }
 
-    //public override bool Update(Map map)
-    //{
-    //    System.Console.WriteLine("Booh");
-    //    var player_position = map.UserControlledObject.Position;
-    //    var direction = Position - player_position;
-    //
-    //    Move(Position + direction, map);
-    //
-    //    return true;
-    //}
+    public override bool Update(TimeSpan delta, Map map)
+    {
+        System.Console.WriteLine("Booh");
+        var player_position = map.UserControlledObject.Position;
+        var direction = Position - player_position;
+    
+        Move(Position + direction, map);
+    
+        return true;
+    }
 }

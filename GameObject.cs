@@ -70,11 +70,11 @@ internal class GameObject
         return false;
     }
 
-    public void RestoreMap(Map map) =>
-    _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
-
-    public virtual bool Update(TimeSpan delta, Map map);
+    public virtual bool Update(TimeSpan delta, Map map)
     {
         return false;
     }
+
+    public void RestoreMap(Map map) =>
+    _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
 }

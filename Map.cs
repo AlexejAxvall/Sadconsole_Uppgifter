@@ -21,7 +21,7 @@ internal class Map
 
         FillBackground();
 
-        UserControlledObject = new GameObject(new ColoredGlyph(Color.White, Color.Black, 2), _mapSurface.Surface.Area.Center, _mapSurface);
+        UserControlledObject = new Player(_mapSurface.Surface.Area.Center, _mapSurface);
 
         CreateWalls();
         CreatePellet();
@@ -145,6 +145,15 @@ internal class Map
         {
             _mapObjects.Remove(mapObject);
             mapObject.RestoreMap(this);
+        }
+    }
+
+    public void Update(TimeSpan delta)
+    {
+        foreach (var go in _mapObjects)
+        {
+            Debug.WriteLine(delta);
+            go.Update(delta, this);
         }
     }
 }
